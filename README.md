@@ -5,17 +5,17 @@
 Скачать /dist
 Добавить на страничку
 
-    `
+    ``
     <link rel="stylesheet" href="css/svs-style.css">
 
     <link rel="stylesheet" href="css/animate.css">
 
     <script src="js/slider-vi.js"></script>
 
-    `
+    ``
 В теле странички вставить блок где нужно вставить слайдер
 
-`
+``
         <div class="slider-v" id="simpleSlider">
 
             <div class="navsvs prev-slide" id="prev-btn"></div>
@@ -24,11 +24,11 @@
 
         </div>
 
-`
+``
 
 Добавить скрипт инициализации
 
-`
+``
             let vs = new SimpleVideoSlider({
 
                 listImage: [
@@ -56,9 +56,9 @@
                 ]
 
             });
-            
+
             vs.initPlayaerVI();
-`
+``
 
 ## Параметры
 
