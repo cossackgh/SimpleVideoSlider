@@ -1,0 +1,83 @@
+.slider-v {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: nowrap;
+    width: 100%;
+    margin: auto;
+}
+
+.slider-v .slide {
+    width: 100%;
+    padding: 10px;
+    font-size: 0;
+}
+
+.slider-v .slide img {
+    display: inline;
+    align-self: center;
+    max-width: 100%;
+    max-height: 100%;
+}
+
+.slider-v .slide video {
+    width: 100%;
+}
+
+.hide-slide {
+    display: none;
+    opacity: 0;
+}
+
+.navsvs {
+    width: 80px;
+    height: 80px;
+    z-index: 100;
+}
+
+@media only screen and (max-width: 760px) {
+    .navsvs {
+        width: 40px;
+        height: 40px;
+    }
+}
+
+@media only screen and (max-width: 375px) {
+    .navsvs {
+        width: 20px;
+        height: 20px;
+    }
+}
+
+@media only screen and (max-width: 320px) {
+    .navsvs {
+        width: 10px;
+        height: 10px;
+    }
+}
+
+.navsvs.prev-slide {
+    position: absolute;
+    left: 20px;
+    background-image: url('data:image/svg+xml;utf8,<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"    viewBox="0 0 100.2 272.8" enable-background="new 0 0 100.2 272.8" xml:space="preserve"><polygon fill="rgb(255,255,255)" points="86.7,272.8 100.2,264.2 19,136.4 100.2,8.6 86.7,0 0,136.4 "/></svg>');
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.navsvs.next-slide {
+    position: absolute;
+    right: 20px;
+    background-image: url('data:image/svg+xml;utf8,<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"    viewBox="0 0 100.2 272.8" enable-background="new 0 0 100.2 272.8" xml:space="preserve"><polygon fill="rgb(255,255,255)" points="13.5,272.8 0,264.2 81.2,136.4 0,8.6 13.5,0 100.2,136.4 "/></svg>');
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+@media only screen and (max-width: 760px) {
+    .navsvs.prev-slide {
+        left: 5px;
+    }
+    .navsvs.next-slide {
+        right: 20px;
+    }
+}

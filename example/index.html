@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="css/svs-style.css">
+    <link rel="stylesheet" href="css/animate.css">
+    <title>Simple Video Slider</title>
+    <style>
+        .container {
+            margin: auto;
+            width: 70%;
+            display: block;
+            position: relative;
+        }
+        
+        body {
+            width: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            margin: 0;
+        }
+        
+        h1 {
+            width: 100%;
+            text-align: center;
+        }
+        
+        @media only screen and (max-width: 720px) {
+            .container {
+                width: 90%;
+            }
+        }
+        
+        @media only screen and (max-width: 375px) {
+            .container {
+                width: 100%;
+            }
+        }
+        
+        @media only screen and (max-width: 320px) {
+            .container {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Video Player</h1>
+    <div class="container">
+        <div class="slider-v" id="simpleSlider">
+
+            <div class="navsvs prev-slide" id="prev-btn"></div>
+            <div class="navsvs next-slide" id="next-btn"></div>
+
+        </div>
+
+        <div style="height: 30px; width: 100%;"></div>
+        <div style=" width: 50%; margin: auto;">
+            <div class="slider-v" id="simpleSlider2">
+                <div class="navsvs prev-slide" id="prev-btn2"></div>
+                <div class="navsvs next-slide" id="next-btn2"></div>
+            </div>
+        </div>
+
+        <div style="height: 30px; width: 100%;"></div>
+
+        <div style=" width: 95%; margin: auto;">
+            <div class="slider-v" id="simpleSlider3">
+                <div class="navsvs prev-slide" id="prev-btn3"></div>
+                <div class="navsvs next-slide" id="next-btn3"></div>
+            </div>
+        </div>
+
+
+
+
+        <!--         <button id="stopPl" style="margin-top: 20px;"> STOP </button>
+
+        <button id="playPl" style="margin-top: 20px;"> PLAY </button> -->
+
+        <div style="height: 130px; width: 100%;"></div>
+    </div>
+
+    <script src="js/slider-vi.js"></script>
+
+    <script>
+        window.onload = function() {
+            // к этому моменту страница загружена
+
+            let vs = new SimpleVideoSlider({
+                DEBUG: false,
+                sliderId: 'simpleSlider',
+                listImage: [{
+                        'type': 'image',
+                        'urlimg': 'https://xn--80aaekbrndk4ajv3ixbzb.xn--p1ai/upload/iblock/4c6/4c60b5c320235d6875e47ffa9f57e25b.jpg'
+                    }, {
+                        'type': 'video',
+                        'urlimg': 'https://xn--80aaekbrndk4ajv3ixbzb.xn--p1ai/upload/iblock/733/733ace4b6022c04227c64208bb8d274f.mp4'
+                    }, {
+                        'type': 'image',
+                        'urlimg': 'https://xn--80aaekbrndk4ajv3ixbzb.xn--p1ai/upload/iblock/a70/a7011ed535bf49f6e0dbd4c963351704.jpg'
+                    }, {
+                        'type': 'image',
+                        'urlimg': 'https://xn--80aaekbrndk4ajv3ixbzb.xn--p1ai/upload/iblock/8b5/8b5c0845704796ebff6f2db8517d61a0.jpg'
+                    }, {
+                        'type': 'image',
+                        'urlimg': 'https://xn--80aaekbrndk4ajv3ixbzb.xn--p1ai/upload/iblock/5bf/5bf57ca3413688bdadff5f4a4bff40df.jpg'
+                    }, {
+                        'type': 'video',
+                        'urlimg': 'https://xn--80aaekbrndk4ajv3ixbzb.xn--p1ai/upload/iblock/6a6/6a6f2bf9fc7226e1a2aeb1b342ccd28a.mp4'
+                    }, {
+                        'type': 'image',
+                        'urlimg': 'https://xn--80aaekbrndk4ajv3ixbzb.xn--p1ai/upload/iblock/6c7/6c7263c6ff566d8d9bb24aeea2da36e6.jpg'
+                    }, {
+                        'type': 'video',
+                        'urlimg': 'images/Euro-Winter-Sml-1.m4v'
+                    },
+
+                ],
+                padding: '0',
+                bgcolor: "#ddd",
+                animate: "fadeIn",
+                prevbtn: "prev-btn",
+                nextbtn: "next-btn",
+                loop: true,
+                autoplay: true,
+                durationIMG: 12000,
+                navBtn: true,
+            });
+
+            vs.initPlayaerVI();
+
+            let vs2 = new SimpleVideoSlider({
+                DEBUG: false,
+                sliderId: 'simpleSlider2',
+                listImage: [{
+                        'type': 'image',
+                        'urlimg': 'https://xn--80aaekbrndk4ajv3ixbzb.xn--p1ai/upload/iblock/4c6/4c60b5c320235d6875e47ffa9f57e25b.jpg'
+                    },
+
+                    {
+                        'type': 'image',
+                        'urlimg': 'https://xn--80aaekbrndk4ajv3ixbzb.xn--p1ai/upload/iblock/a70/a7011ed535bf49f6e0dbd4c963351704.jpg'
+                    }, {
+                        'type': 'image',
+                        'urlimg': 'https://xn--80aaekbrndk4ajv3ixbzb.xn--p1ai/upload/iblock/8b5/8b5c0845704796ebff6f2db8517d61a0.jpg'
+                    }, {
+                        'type': 'image',
+                        'urlimg': 'https://xn--80aaekbrndk4ajv3ixbzb.xn--p1ai/upload/iblock/5bf/5bf57ca3413688bdadff5f4a4bff40df.jpg'
+                    }, {
+                        'type': 'image',
+                        'urlimg': 'https://xn--80aaekbrndk4ajv3ixbzb.xn--p1ai/upload/iblock/6c7/6c7263c6ff566d8d9bb24aeea2da36e6.jpg'
+                    },
+
+                ],
+                padding: '0',
+                bgcolor: "#000",
+                animate: "fadeIn",
+                prevbtn: "prev-btn2",
+                nextbtn: "next-btn2",
+                loop: true,
+                autoplay: true,
+                navBtn: false,
+            });
+
+            vs2.initPlayaerVI();
+
+
+            let vs3 = new SimpleVideoSlider({
+                DEBUG: false,
+                sliderId: 'simpleSlider3',
+                listImage: [{
+                        'type': 'image',
+                        'urlimg': 'images/img-1.jpg'
+                    },
+                    /* {
+                                           'type': 'video',
+                                           'urlimg': 'images/Euro With Logo-Sml-1.m4v'
+                                       }, */
+                    {
+                        'type': 'image',
+                        'urlimg': 'images/img-2.jpg'
+                    }, {
+                        'type': 'image',
+                        'urlimg': 'images/img-3.jpg'
+                    }, {
+                        'type': 'image',
+                        'urlimg': 'images/img-4.jpg'
+                    }, {
+                        'type': 'image',
+                        'urlimg': 'images/img-5.jpg'
+                    },
+
+                ],
+                padding: '0',
+                bgcolor: "#000",
+                animate: "fadeIn",
+                prevbtn: "prev-btn3",
+                nextbtn: "next-btn3",
+                loop: true,
+                autoplay: false,
+                navBtn: true,
+            });
+
+            vs3.initPlayaerVI();
+
+
+
+
+
+
+
+            /*             let btnStop = document.getElementById('stopPl');
+                        let btnPlay = document.getElementById('playPl');
+                        btnStop.onclick = function() {
+                            vs.stopSlider();
+                        };
+                        btnPlay.onclick = function() {
+                            vs.playSlider(0);
+                        }; */
+
+
+        };
+    </script>
+
+</body>
+
+</html>
