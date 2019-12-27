@@ -7,11 +7,8 @@
 
     ``
     <link rel="stylesheet" href="css/svs-style.css">
-
     <link rel="stylesheet" href="css/animate.css">
-
     <script src="js/slider-vi.js"></script>
-
     ``
 В теле странички вставить блок где нужно вставить слайдер
 
