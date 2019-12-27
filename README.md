@@ -3,63 +3,42 @@
 ## Установка
 
 Скачать /dist
-Добавить на страничку
 
-    ``
+**Добавить на страничку**
+
     <link rel="stylesheet" href="css/svs-style.css">
     <link rel="stylesheet" href="css/animate.css">
-    <script src="js/slider-vi.js"></script>
-    ``
-В теле странички вставить блок где нужно вставить слайдер
+    <script src="js/slider-vi.js"></script> 
+    
+**В теле странички вставить блок где нужно вставить слайдер**
 
-``
         <div class="slider-v" id="simpleSlider">
-
             <div class="navsvs prev-slide" id="prev-btn"></div>
-
             <div class="navsvs next-slide" id="next-btn"></div>
-
         </div>
 
-``
+**Добавить скрипт инициализации**
 
-Добавить скрипт инициализации
 
-``
             let vs = new SimpleVideoSlider({
-
                 listImage: [
-
                     {
-
                         'type': 'image',
-
                         'urlimg': 'images/img-2.jpg'
-
                     }, {
-
                         'type': 'image',
-
                         'urlimg': 'images/img-3.jpg'
-
                     }, {
-
                         'type': 'video',
-
                         'urlimg': 'images/video.mp4'
-
                     },
-
                 ]
-
             });
-
             vs.initPlayaerVI();
-``
 
 ## Параметры
 
-Для управления режимами проигрывания сладера используют следующие параметры:
+**Для управления режимами проигрывания сладера используют следующие параметры:**
 
 
                 sliderId: 'simpleSlider', - ID блока, где размещается слайдер
