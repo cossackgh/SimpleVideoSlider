@@ -56,6 +56,7 @@
 
             <div class="navsvs prev-slide" id="prev-btn"></div>
             <div class="navsvs next-slide" id="next-btn"></div>
+            <div class="pagesslide" id="pagesnav"></div>
 
         </div>
 
@@ -64,6 +65,7 @@
             <div class="slider-v" id="simpleSlider2">
                 <div class="navsvs prev-slide" id="prev-btn2"></div>
                 <div class="navsvs next-slide" id="next-btn2"></div>
+                <div class="pagesslide" id="pagesnav2"></div>
             </div>
         </div>
 
@@ -131,6 +133,9 @@
                 autoplay: true,
                 durationIMG: 12000,
                 navBtn: true,
+                pages: true,
+                colorPagesOff: "#ddd",
+                colorPagesOn: "#fc0",
             });
 
             vs.initPlayaerVI();
@@ -163,9 +168,11 @@
                 animate: "fadeIn",
                 prevbtn: "prev-btn2",
                 nextbtn: "next-btn2",
+                idPages: "pagesnav2",
                 loop: true,
                 autoplay: true,
                 navBtn: false,
+                pages: true,
             });
 
             vs2.initPlayaerVI();
@@ -205,6 +212,7 @@
                 loop: true,
                 autoplay: false,
                 navBtn: true,
+                pages: false,
             });
 
             vs3.initPlayaerVI();

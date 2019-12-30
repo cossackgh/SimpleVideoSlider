@@ -10,7 +10,7 @@ class SimpleVideoSlider {
 
     constructor(options) {
         let classSV = this;
-        const version = "0.3";
+        const version = "0.4";
         const globalVAR = null;
         this.timerSlider = null;
         this.durationCurrSlide = 0;
@@ -25,6 +25,7 @@ class SimpleVideoSlider {
             durationIMG: 4000,
             loop: true,
             navBtn: true,
+            pages: true,
             padding: "0",
             autoplay: true,
             videoautoplay: false,
@@ -33,6 +34,9 @@ class SimpleVideoSlider {
             prevbtn: "prev-btn",
             nextbtn: "next-btn",
             animate: "fadeIn",
+            idPages: "pagesnav",
+            colorPagesOff: "#ddd",
+            colorPagesOn: "#555",
 
 
 
@@ -78,6 +82,7 @@ class SimpleVideoSlider {
 
 
         let SVSlider = document.getElementById(classSV.sliderId);
+
         SVSlider.setAttribute("style", 'background-color: ' + classSV.bgcolor + ';');
 
         SVSlider.addEventListener('touchstart', classSV.handleTouchStart.bind(this), false);
@@ -88,12 +93,13 @@ class SimpleVideoSlider {
         if (classSV.DEBUG) console.log('classSV.countG = ', classSV.countG);
         if (classSV.DEBUG) console.log('listImage :', classSV.listImage);
 
+        let SVSPages = document.getElementById(classSV.idPages);
 
         if (classSV.listImage.length) {
             for (let ix = 0; ix < classSV.listImage.length; ix++) {
                 let slide = document.createElement('div');
                 const element = classSV.listImage[ix];
-                if (classSV.DEBUG) console.log('listImage URL [' + ix + '] :', classSV.listImage[ix].urlimg);
+                //if (classSV.DEBUG) console.log('listImage URL [' + ix + '] :', classSV.listImage[ix].urlimg);
                 if (ix) {
                     slide.className = "slide  hide-slide";
                     slide.setAttribute("style", 'padding: ' + classSV.padding + 'px;');
@@ -125,6 +131,20 @@ class SimpleVideoSlider {
                     SVSlider.append(slide);
                 }
 
+
+                if (classSV.pages) {
+                    let pageElem = document.createElement('div');
+                    if (ix === 0) {
+                        pageElem.className = "pagebtn pagebtn-on";
+                        pageElem.setAttribute("style", 'background-color: ' + classSV.colorPagesOn + ';');
+                    } else {
+                        pageElem.className = "pagebtn pagebtn-off";
+                        pageElem.setAttribute("style", 'background-color: ' + classSV.colorPagesOff + ';');
+
+                    }
+                    if (classSV.DEBUG) console.log('INIT pageElem :', pageElem);
+                    SVSPages.append(pageElem);
+                }
             }
         }
 
@@ -211,7 +231,7 @@ class SimpleVideoSlider {
 
         let currSlides = null;
         let SVSlider = null;
-
+        let SVSPagesBtn = document.getElementById(classSV.idPages).children;
         SVSlider = document.getElementById(classSV.sliderId);
         if (classSV.DEBUG) console.log('SVSlider :', SVSlider);
         if (classSV.DEBUG) console.log('type current slide :', classSV.listImage[numSlide].type);
@@ -240,7 +260,9 @@ class SimpleVideoSlider {
         classSV.hideAllSlide();
         currSlides.classList.remove("hide-slide");
         currSlides.classList.add('animated', classSV.animate);
-
+        if (classSV.pages) {
+            SVSPagesBtn[numSlide].setAttribute("style", 'background-color: ' + classSV.colorPagesOn + ';');
+        }
 
         /* setTimeout(() => {
             currSlides.classList.remove("fadeOut");
@@ -255,13 +277,19 @@ class SimpleVideoSlider {
         let SVSlider = null;
         SVSlider = document.getElementById(classSV.sliderId);
         let allSlides = SVSlider.getElementsByClassName('slide');
+        let SVSPagesBtn = document.getElementById(classSV.idPages).children;
+
+        if (classSV.DEBUG) console.log('SVSPagesBtn = ', SVSPagesBtn);
 
         for (let index = 0; index < allSlides.length; index++) {
             const elSlide = allSlides[index];
-            if (classSV.DEBUG) console.log('slide = ', elSlide);
+            //if (classSV.DEBUG) console.log('slide = ', elSlide);
             elSlide.classList.add("hide-slide");
             elSlide.classList.remove("fadeOut");
             //elSlide.classList.add("fadeOut");
+            if (classSV.pages) {
+                SVSPagesBtn[index].setAttribute("style", 'background-color: ' + classSV.colorPagesOff + ';');
+            }
 
         }
 

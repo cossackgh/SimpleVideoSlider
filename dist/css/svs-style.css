@@ -81,3 +81,47 @@
         right: 20px;
     }
 }
+
+.pagesslide {
+    position: absolute;
+    bottom: 5px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 101;
+}
+
+.pagesslide .pagebtn {
+    width: 10px;
+    height: 10px;
+    margin: 5px;
+    border-radius: 10px;
+}
+
+@media only screen and (max-width: 760px) {
+    .pagesslide .pagebtn {
+        width: 10px;
+        height: 10px;
+        margin: 5px;
+        border-radius: 10px;
+    }
+}
+
+@media only screen and (max-width: 375px) {
+    .pagesslide .pagebtn {
+        width: 8px;
+        height: 8px;
+        margin: 4px;
+        border-radius: 10px;
+    }
+}
+
+@media only screen and (max-width: 320px) {
+    .pagesslide .pagebtn {
+        width: 5px;
+        height: 5px;
+        margin: 2px;
+        border-radius: 6px;
+    }
+}

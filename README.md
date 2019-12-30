@@ -15,6 +15,7 @@
         <div class="slider-v" id="simpleSlider">
             <div class="navsvs prev-slide" id="prev-btn"></div>
             <div class="navsvs next-slide" id="next-btn"></div>
+            <div class="pagesslide" id="pagesnav"></div>
         </div>
 
 **Добавить скрипт инициализации**
@@ -50,4 +51,7 @@
                 loop: true, - Листание слайдера по кольцу или от края до края
                 autoplay: false, - Автопроигрывание
                 navBtn: true, - Вкл/Выкл кнопок навигации вправо-влево
+                idPages: "pagesnav", - ID блока пагинации
+                colorPagesOff: "#ddd", - цвет элемента пагинации неактивных слайдов
+                colorPagesOn: "#555",  - цвет элемента пагинации текущего слайда
 
