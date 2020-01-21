@@ -1,22 +1,64 @@
 'use strict';
 
+let isAPIYoutubeLoad = document.querySelectorAll('script');
+let tag = document.createElement('script');
+
+var x = {
+    aInternal: 10,
+    aListener: function(val) {},
+    set a(val) {
+        this.aInternal = val;
+        this.aListener(val);
+    },
+    get a() {
+        return this.aInternal;
+    },
+    registerListener: function(listener) {
+        this.aListener = listener;
+    }
+}
+
+
+
+for (const key in isAPIYoutubeLoad) {
+    if (isAPIYoutubeLoad.hasOwnProperty(key)) {
+        const element = isAPIYoutubeLoad[key];
+
+        if (element.getAttribute('src') === 'https://www.youtube.com/iframe_api') {
+
+            break;
+        } else {
+            tag.src = "https://www.youtube.com/iframe_api";
+            let firstScriptTag = document.getElementsByTagName('script')[0];
+            firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+
+        }
+
+    }
+}
+
 
 let DEBUG;
 
 
+
 class SimpleVideoSlider {
-
-
 
     constructor(options) {
         let classSV = this;
-        const version = "0.4";
+
+        const version = "0.5";
         const globalVAR = null;
         this.timerSlider = null;
-        this.durationCurrSlide = 0;
+        this.durationCurrSlide = null;
         this.countG = 0;
         this.xDown = null;
         this.yDown = null;
+        this.countYTVideo = 0;
+        this.isPlayYT = false;
+        this.player = null;
+        this.firstVideoSlide = true;
 
         const defaults = {
             DEBUG: false,
@@ -38,11 +80,7 @@ class SimpleVideoSlider {
             colorPagesOff: "#ddd",
             colorPagesOn: "#555",
 
-
-
-
         };
-
 
         const populated = Object.assign(defaults, options);
         for (const key in populated) {
@@ -50,8 +88,6 @@ class SimpleVideoSlider {
                 this[key] = populated[key];
             }
         }
-
-
 
         if (defaults.DEBUG) console.log('        %c << == Current version Simple Video Slider :%s == >>', 'color: #000; background-color: #faa; padding: 2px 5px; border-radius: 2px', version);
 
@@ -69,19 +105,15 @@ class SimpleVideoSlider {
     }
 
 
-
-
-
-
-
     initPlayaerVI() {
 
         DEBUG = this.DEBUG;
         const classSV = this;
-
-
+        let slide = null;
 
         let SVSlider = document.getElementById(classSV.sliderId);
+
+
 
         SVSlider.setAttribute("style", 'background-color: ' + classSV.bgcolor + ';');
 
@@ -97,38 +129,105 @@ class SimpleVideoSlider {
 
         if (classSV.listImage.length) {
             for (let ix = 0; ix < classSV.listImage.length; ix++) {
-                let slide = document.createElement('div');
+                switch (classSV.listImage[ix].type) {
+                    case 'image':
+                        slide = document.createElement('div');
+                        break;
+                    case 'video':
+                        slide = document.createElement('div');
+                        break;
+                    case 'youtube':
+                        classSV.countYTVideo++;
+                        slide = document.createElement("div");
+                        slide.setAttribute("id", 'yut' + classSV.countYTVideo);
+
+                        break;
+
+                    default:
+                        break;
+                }
+
+
                 const element = classSV.listImage[ix];
                 //if (classSV.DEBUG) console.log('listImage URL [' + ix + '] :', classSV.listImage[ix].urlimg);
                 if (ix) {
                     slide.className = "slide  hide-slide";
                     slide.setAttribute("style", 'padding: ' + classSV.padding + 'px;');
 
-                    if (classSV.listImage[ix].type === 'image') {
-                        slide.innerHTML = '<img src="' + classSV.listImage[ix].urlimg + '" class="imgslide">';
-                    } else {
-                        if (classSV.videocontrol) {
-                            slide.innerHTML = '<video controls="controls"  muted> <source src="' + classSV.listImage[ix].urlimg + '"  type="video/mp4"> </video>';
-                        } else {
-                            slide.innerHTML = '<video muted> <source src="' + classSV.listImage[ix].urlimg + '"  type="video/mp4"> </video>';
-                        }
+                    switch (classSV.listImage[ix].type) {
+                        case 'image':
+                            slide.innerHTML = '<img src="' + classSV.listImage[ix].urlimg + '" class="imgslide">';
+                            break;
+                        case 'video':
+                            if (classSV.videocontrol) {
+                                slide.innerHTML = '<video controls="controls"  muted> <source src="' + classSV.listImage[ix].urlimg + '"  type="video/mp4"> </video>';
+                            } else {
+                                slide.innerHTML = '<video muted> <source src="' + classSV.listImage[ix].urlimg + '"  type="video/mp4"> </video>';
+                            }
+
+                            break;
+                        case 'youtube':
+                            if (classSV.videocontrol) {
+                                slide.style.height = '711px';
+                            } else {
+                                slide.style.height = '711px';
+                            }
+
+                            break;
+
+                        default:
+                            break;
+                    }
+
+
+                    SVSlider.append(slide);
+                    if (classSV.listImage[ix].type === 'youtube') {
+                        classSV.onYouTubeIframeAPIReady('yut' + classSV.countYTVideo, classSV.listImage[ix].urlimg);
+                        console.log('currYTPlayer :', classSV.player);
+                        classSV.player.playVideo();
 
                     }
-                    SVSlider.append(slide);
+
                 } else {
                     slide.className = "slide ";
                     slide.setAttribute("style", 'padding: ' + classSV.padding + 'px;');
+                    switch (classSV.listImage[ix].type) {
+                        case 'image':
+                            slide.innerHTML = '<img src="' + classSV.listImage[ix].urlimg + '" class="imgslide">';
+                            break;
+                        case 'video':
+                            if (classSV.videocontrol) {
+                                slide.innerHTML = '<video controls="controls"  muted> <source src="' + classSV.listImage[ix].urlimg + '"  type="video/mp4"> </video>';
+                            } else {
+                                slide.innerHTML = '<video muted> <source src="' + classSV.listImage[ix].urlimg + '"  type="video/mp4"> </video>';
+                            }
 
-                    if (classSV.listImage[ix].type === 'image') {
-                        slide.innerHTML = '<img src="' + classSV.listImage[ix].urlimg + '" class="imgslide">';
-                    } else {
-                        if (classSV.videocontrol) {
-                            slide.innerHTML = '<video controls="controls"  muted> <source src="' + classSV.listImage[ix].urlimg + '"  type="video/mp4"> </video>';
-                        } else {
-                            slide.innerHTML = '<video muted> <source src="' + classSV.listImage[ix].urlimg + '"  type="video/mp4"> </video>';
-                        }
+                            break;
+                        case 'youtube':
+                            if (classSV.videocontrol) {
+                                slide.style.height = '711px';
+                            } else {
+                                slide.style.height = '711px';
+
+                            }
+
+                            break;
+
+                        default:
+                            break;
                     }
+
+
                     SVSlider.append(slide);
+
+
+                    if (classSV.listImage[ix].type === 'youtube') {
+                        classSV.onYouTubeIframeAPIReady('yut' + classSV.countYTVideo, classSV.listImage[ix].urlimg);
+                        console.log('else ix currYTPlayer :', classSV.player);
+
+                    }
+
+
                 }
 
 
@@ -142,7 +241,7 @@ class SimpleVideoSlider {
                         pageElem.setAttribute("style", 'background-color: ' + classSV.colorPagesOff + ';');
 
                     }
-                    if (classSV.DEBUG) console.log('INIT pageElem :', pageElem);
+                    //    if (classSV.DEBUG) console.log('INIT pageElem :', pageElem);
                     SVSPages.append(pageElem);
                 }
             }
@@ -220,9 +319,88 @@ class SimpleVideoSlider {
         } else {
 
         }
+
         return true;
 
     }
+
+
+
+
+    /*
+     * **************** <<<<< YouTube Section >>>>>>> ********************
+     */
+
+    onYouTubeIframeAPIReady(idYTPlayer, vId) {
+
+
+        const classSV = this;
+        console.log('onYouTubeIframeAPIReady classSV :', classSV);
+        classSV.player = new YT.Player(idYTPlayer, {
+            height: '100%',
+            width: '100%',
+            videoId: vId,
+            playerVars: {
+                autoplay: 0,
+                loop: 1,
+                controls: 0,
+                showinfo: 0,
+                autohide: 1,
+                modestbranding: 1,
+                vq: 'hd1080'
+            },
+            events: {
+                'onReady': onPlayerReady,
+                'onStateChange': onPlayerStateChange
+            }
+        });
+
+        if (classSV.DEBUG) console.log('onYouTubeIframeAPIReady = ', idYTPlayer, ' player = ', classSV.player);
+
+
+        function onPlayerReady(event) {
+
+            console.log('onPlayerReady event = ', event);
+            //if (classSV.DEBUG) console.log('onPlayerReady event = ', event);
+            //let durYT = event.target.getDuration();
+            let durYT = 3;
+            console.log('GET DURATION durYT :', durYT);
+            classSV.durationCurrSlide = durYT;
+            console.log('On Player Ready THIS :', classSV);
+            console.log('On Player Ready START :', classSV.isPlayYT);
+
+            event.target.mute();
+
+            x.registerListener(function(val) {
+                console.log("============================>> CHANGE x.a to " + val);
+            });
+
+
+
+            if (classSV.isPlayYT) {
+                event.target.startPlay();
+            }
+
+        };
+
+        function onPlayerStateChange(event) {
+            console.log('onPlayerStateChange event = ', event);
+
+        }
+
+        function stopYTVideo() {
+            player.stopVideo();
+        }
+
+        function playYTVideo() {
+            player.playVideo();
+        }
+
+        return classSV.player;
+
+    };
+
+
 
 
     showSlideNum(numSlide) {
@@ -233,26 +411,27 @@ class SimpleVideoSlider {
         let SVSlider = null;
         let SVSPagesBtn = document.getElementById(classSV.idPages).children;
         SVSlider = document.getElementById(classSV.sliderId);
-        if (classSV.DEBUG) console.log('SVSlider :', SVSlider);
-        if (classSV.DEBUG) console.log('type current slide :', classSV.listImage[numSlide].type);
+        if (classSV.DEBUG) console.log('showSlideNum SVSlider  :', SVSlider);
+        if (classSV.DEBUG) console.log('showSlideNum type current slide :', classSV.listImage[numSlide].type);
 
-        if (classSV.listImage[numSlide].type === 'image') {
+        switch (classSV.listImage[numSlide].type) {
+            case 'image':
 
-            /*             let allVideo = SVSlider.querySelector('video');
-                        console.log('allVideo :', allVideo);
-                        for (let l = 0; l < allVideo.length; l++) {
-                            const elvid = allVideo[l];
-                            elvid.pause();
+                break;
+            case 'video':
+                /*                 SVSlider.getElementsByClassName('slide')[numSlide].querySelector('video').currentTime = 0;
+                                SVSlider.getElementsByClassName('slide')[numSlide].querySelector('video').play(); */
+                break;
+            case 'youtube':
+                SVSlider.isPlayYT = true;
+                x.a = 1;
+                break;
 
-
-                        } */
-
-
-        } else {
-            SVSlider.getElementsByClassName('slide')[numSlide].querySelector('video').currentTime = 0;
-            SVSlider.getElementsByClassName('slide')[numSlide].querySelector('video').play();
-
+            default:
+                break;
         }
+
+
 
         if (classSV.DEBUG) console.log('durationCurrSlide :', classSV.durationCurrSlide);
 
@@ -279,7 +458,7 @@ class SimpleVideoSlider {
         let allSlides = SVSlider.getElementsByClassName('slide');
         let SVSPagesBtn = document.getElementById(classSV.idPages).children;
 
-        if (classSV.DEBUG) console.log('SVSPagesBtn = ', SVSPagesBtn);
+        //    if (classSV.DEBUG) console.log('SVSPagesBtn = ', SVSPagesBtn);
 
         for (let index = 0; index < allSlides.length; index++) {
             const elSlide = allSlides[index];
@@ -313,34 +492,128 @@ class SimpleVideoSlider {
         let currSlides = null;
         let SVSlider = null;
 
+
+
         SVSlider = document.getElementById(classSV.sliderId);
+
+
+
         if (classSV.DEBUG) console.log('SVSlider :', SVSlider);
         if (classSV.DEBUG) console.log('type current slide :', classSV.listImage[count].type);
 
-        if (classSV.listImage[count].type === 'image') {
+        switch (classSV.listImage[count].type) {
+            case 'image':
+                classSV.durationCurrSlide = classSV.durationIMG;
+                currSlides = SVSlider.getElementsByClassName('slide')[count];
 
-            classSV.durationCurrSlide = classSV.durationIMG;
+                if (classSV.DEBUG) console.log('currSlides :', currSlides);
+                if (classSV.DEBUG) console.log('timer  :', count);
 
-        } else {
-            classSV.durationCurrSlide = SVSlider.getElementsByClassName('slide')[count].querySelector('video').duration * 1000;
-            SVSlider.getElementsByClassName('slide')[count].querySelector('video').play();
+                classSV.hideAllSlide();
+                classSV.showSlideNum(count);
+
+                classSV.timeoutNext(classSV.durationCurrSlide, count);
+
+
+                break;
+            case 'video':
+
+                console.log("##################Video Source: ", SVSlider.getElementsByClassName('slide')[count].querySelector('video'));
+                if (count === 0 && classSV.firstVideoSlide) {
+                    SVSlider.getElementsByClassName('slide')[count].querySelector('video').addEventListener("loadedmetadata",
+                        function() {
+                            classSV.firstVideoSlide = false;
+                            classSV.durationCurrSlide = SVSlider.getElementsByClassName('slide')[count].querySelector('video').duration * 1000;
+                            SVSlider.getElementsByClassName('slide')[count].querySelector('video').play();
+
+                            currSlides = SVSlider.getElementsByClassName('slide')[count];
+
+                            if (classSV.DEBUG) console.log('currSlides :', currSlides);
+                            if (classSV.DEBUG) console.log('timer  :', count);
+
+                            classSV.hideAllSlide();
+                            classSV.showSlideNum(count);
+
+                            classSV.timeoutNext(classSV.durationCurrSlide, count);
+
+                        }, true);
+                } else {
+                    classSV.durationCurrSlide = SVSlider.getElementsByClassName('slide')[count].querySelector('video').duration * 1000;
+                    SVSlider.getElementsByClassName('slide')[count].querySelector('video').play();
+
+                    currSlides = SVSlider.getElementsByClassName('slide')[count];
+
+                    if (classSV.DEBUG) console.log('currSlides :', currSlides);
+                    if (classSV.DEBUG) console.log('timer  :', count);
+
+                    classSV.hideAllSlide();
+                    classSV.showSlideNum(count);
+
+                    classSV.timeoutNext(classSV.durationCurrSlide, count);
+
+                }
+
+
+
+
+
+
+                /*                 SVSlider.getElementsByClassName('slide')[count].querySelector('video').addEventListener('loadeddata', function() {
+                                    console.log("Loaded the video's data!");
+                                    console.log("Video Source: ", SVSlider.getElementsByClassName('slide')[count].querySelector('video'));
+                                    console.log("Video Duration: ", SVSlider.getElementsByClassName('slide')[count].querySelector('video').duration);
+
+                                    classSV.durationCurrSlide = SVSlider.getElementsByClassName('slide')[count].querySelector('video').duration * 1000;
+                                    SVSlider.getElementsByClassName('slide')[count].querySelector('video').play();
+
+                                    classSV.timerSlider = setTimeout(() => {
+
+                                        if (classSV.DEBUG) console.log('VIDEO SLIDE TIMEOUT :', classSV.durationCurrSlide);
+
+                                        if (count >= classSV.listImage.length - 1) {
+                                            count = 0;
+                                        } else {
+                                            count++;
+                                        }
+
+                                        classSV.countG = count;
+                                        classSV.playSlider(count);
+                                    }, classSV.durationCurrSlide);
+
+                                }, false); */
+
+                break;
+            case 'youtube':
+                console.log('classSV.currYTPlayer :', classSV.player);
+
+                //classSV.durationCurrSlide = classSV.player.getDuration() * 1000;
+
+                break;
+
+            default:
+                break;
+        }
+
+
+
+        //    if (classSV.DEBUG) console.log('durationCurrSlide :', classSV.durationCurrSlide);
+
+
+
+        if (classSV.durationCurrSlide !== null) {
 
         }
 
-        if (classSV.DEBUG) console.log('durationCurrSlide :', classSV.durationCurrSlide);
+    }
 
-        currSlides = SVSlider.getElementsByClassName('slide')[count];
 
-        if (classSV.DEBUG) console.log('currSlides :', currSlides);
-        if (classSV.DEBUG) console.log('timer  :', count);
-
-        classSV.hideAllSlide();
-        classSV.showSlideNum(count);
-
+    timeoutNext(dur, count) {
+        const classSV = this;
+        if (classSV.DEBUG) console.log('timer dur :', dur);
         classSV.timerSlider = setTimeout(() => {
 
-            //if (classSV.DEBUG) console.log('prevSlides :', prevSlides);
-            //if (classSV.DEBUG) console.log('currSlides :', currSlides);
+            //                 if (classSV.DEBUG) console.log('prevSlides :', prevSlides);
+            //                if (classSV.DEBUG) console.log('currSlides :', currSlides);
 
             if (count >= classSV.listImage.length - 1) {
                 count = 0;
@@ -348,16 +621,17 @@ class SimpleVideoSlider {
                 count++;
             }
 
-            /*             if (classSV.listImage[count].type === 'video') {
-                            SVSlider.getElementsByClassName('slide')[count].querySelector('video').currentTime = 0;
+            //            if (classSV.listImage[count].type === 'video') {
+            //                 SVSlider.getElementsByClassName('slide')[count].querySelector('video').currentTime = 0;
 
-                        } */
+            //}
+
+
             classSV.countG = count;
             classSV.playSlider(count);
-        }, classSV.durationCurrSlide);
+        }, dur);
 
     }
-
 
     handleTouchStart(evt) {
 
@@ -448,6 +722,8 @@ class SimpleVideoSlider {
         classSV.xDown = null;
         classSV.yDown = null;
     };
+
+
 
 
 
