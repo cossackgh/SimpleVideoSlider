@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
     <link rel="stylesheet" href="css/svs-style.css">
     <link rel="stylesheet" href="css/animate.css">
     <title>Simple Video Slider</title>
@@ -79,6 +80,8 @@
         </div>
 
 
+        <div id="yut2"></div>
+
 
 
         <!--         <button id="stopPl" style="margin-top: 20px;"> STOP </button>
@@ -95,15 +98,17 @@
             // к этому моменту страница загружена
 
             let vs = new SimpleVideoSlider({
-                DEBUG: false,
+                DEBUG: true,
                 sliderId: 'simpleSlider',
                 listImage: [{
-                        'type': 'image',
-                        'urlimg': 'https://xn--80aaekbrndk4ajv3ixbzb.xn--p1ai/upload/iblock/4c6/4c60b5c320235d6875e47ffa9f57e25b.jpg'
-                    }, {
                         'type': 'video',
                         'urlimg': 'https://xn--80aaekbrndk4ajv3ixbzb.xn--p1ai/upload/iblock/733/733ace4b6022c04227c64208bb8d274f.mp4'
                     }, {
+                        'type': 'image',
+                        'urlimg': 'https://xn--80aaekbrndk4ajv3ixbzb.xn--p1ai/upload/iblock/4c6/4c60b5c320235d6875e47ffa9f57e25b.jpg'
+                    },
+
+                    {
                         'type': 'image',
                         'urlimg': 'https://xn--80aaekbrndk4ajv3ixbzb.xn--p1ai/upload/iblock/a70/a7011ed535bf49f6e0dbd4c963351704.jpg'
                     }, {
@@ -118,10 +123,11 @@
                     }, {
                         'type': 'image',
                         'urlimg': 'https://xn--80aaekbrndk4ajv3ixbzb.xn--p1ai/upload/iblock/6c7/6c7263c6ff566d8d9bb24aeea2da36e6.jpg'
-                    }, {
-                        'type': 'video',
-                        'urlimg': 'images/Euro-Winter-Sml-1.m4v'
                     },
+                    /*                     {
+                                            'type': 'video',
+                                            'urlimg': 'images/Euro-Winter-Sml-1.m4v'
+                                        }, */
 
                 ],
                 padding: '0',
@@ -131,7 +137,7 @@
                 nextbtn: "next-btn",
                 loop: true,
                 autoplay: true,
-                durationIMG: 12000,
+                durationIMG: 4000,
                 navBtn: true,
                 pages: true,
                 colorPagesOff: "#ddd",
@@ -182,6 +188,9 @@
                 DEBUG: false,
                 sliderId: 'simpleSlider3',
                 listImage: [{
+                        'type': 'youtube',
+                        'urlimg': 'aqz-KE-bpKQ'
+                    }, {
                         'type': 'image',
                         'urlimg': 'images/img-1.jpg'
                     },
@@ -210,12 +219,12 @@
                 prevbtn: "prev-btn3",
                 nextbtn: "next-btn3",
                 loop: true,
-                autoplay: false,
+                autoplay: true,
                 navBtn: true,
                 pages: false,
             });
 
-            vs3.initPlayaerVI();
+            //        vs3.initPlayaerVI();
 
 
 
