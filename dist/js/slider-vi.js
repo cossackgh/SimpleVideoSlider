@@ -518,10 +518,13 @@ class SimpleVideoSlider {
                 break;
             case 'video':
 
-                console.log("##################Video Source: ", SVSlider.getElementsByClassName('slide')[count].querySelector('video'));
-                if (count === 0 && classSV.firstVideoSlide) {
+                console.log("##################Video Source: ", SVSlider.getElementsByClassName('slide')[count].querySelector('video').duration);
+
+
+                if (isNaN(SVSlider.getElementsByClassName('slide')[count].querySelector('video').duration)) {
                     SVSlider.getElementsByClassName('slide')[count].querySelector('video').addEventListener("loadedmetadata",
                         function() {
+                            console.log("##################Video Source: ", SVSlider.getElementsByClassName('slide')[count].querySelector('video').duration);
                             classSV.firstVideoSlide = false;
                             classSV.durationCurrSlide = SVSlider.getElementsByClassName('slide')[count].querySelector('video').duration * 1000;
                             SVSlider.getElementsByClassName('slide')[count].querySelector('video').play();
